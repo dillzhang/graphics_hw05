@@ -118,9 +118,9 @@ def new_matrix(rows = 4, cols = 4):
 
 def print_matrix( matrix ):
     s = ''
-    for r in range( len( matrix[0] ) ):
-        for c in range( len(matrix) ):
-            s+= str(matrix[c][r]) + ' '
+    for r in range( len( matrix ) ):
+        for c in range( len(matrix[0]) ):
+            s+= str(matrix[r][c]) + '\t'
         s+= '\n'
     print s
 
