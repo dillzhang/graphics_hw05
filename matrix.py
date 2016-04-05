@@ -1,5 +1,24 @@
 import math
 
+
+def make_vector(p0, p1):
+    return [p1[0] - p0[0], p1[1] - p0[1], p1[2] - p0[2]]
+
+
+def cross_product(v0, v1):
+    return [v0[1] * v1[2] - v0[2] * v1[1],
+            v0[2] * v1[0] - v0[0] * v1[2],
+            v0[0] * v1[1] - v0[1] * v1[0]]
+
+
+def dot_product(v0, v1):
+    return v0[0] * v1[0] + v0[1] * v1[1] + v0[2] * v1[2]
+
+
+def magnitude(v0):
+    return math.sqrt(v0[0]**2 + v0[1]**2 + v0[2]**2)
+
+
 def make_bezier():
     b = new_matrix()
     ident(b)

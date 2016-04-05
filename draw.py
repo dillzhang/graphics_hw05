@@ -5,6 +5,16 @@ import math
 MAX_STEPS = 100
 
 
+def back_face_culling(points, view, index):
+    mag_view = magnitude(view)
+    v0 = make_vector(points[index], points[index + 1])
+    v1 = make_vector(points[index], points[index + 2])
+    cross = cross_product(v0, v1)
+    dot = dot_product(cross, view)
+    cosTheta = dot / float(mag_view * magnitude(cross))
+    return cosTheta < 0
+
+
 def add_polygon(points, x0, y0, z0, x1, y1, z1, x2, y2, z2):
     add_point(points, x0, y0, z0)
     add_point(points, x1, y1, z1)
@@ -16,9 +26,10 @@ def draw_polygons(points, screen, color):
         print "Need at least 3 points to draw a polygon"
     p = 0
     while p < len(points) - 2:
-        draw_line(screen, points[p][0], points[p][1], points[p+1][0], points[p+1][1], color)
-        draw_line(screen, points[p+1][0], points[p+1][1], points[p+2][0], points[p+2][1], color)
-        draw_line(screen, points[p+2][0], points[p+2][1], points[p][0], points[p][1], color)
+        if (back_face_culling(points, [0, 0, -1], p)):
+            draw_line(screen, points[p][0], points[p][1], points[p+1][0], points[p+1][1], color)
+            draw_line(screen, points[p+1][0], points[p+1][1], points[p+2][0], points[p+2][1], color)
+            draw_line(screen, points[p+2][0], points[p+2][1], points[p][0], points[p][1], color)
         p += 3
 
         
@@ -56,7 +67,7 @@ def add_sphere(points, cx, cy, cz, r, step):
                             temp[index][0], temp[index][1], temp[index][2],
                             temp[index + 1][0], temp[index + 1][1], temp[index + 1][2],
                             temp[index + num_steps + 1 + 1][0], temp[index + num_steps + 1 + 1][1], temp[index + num_steps + 1 + 1][2])
-            if longt_stop > 0:
+            if longt > 0:
                 add_polygon(points,
                             temp[index + num_steps + 1][0], temp[index + num_steps + 1][1], temp[index + num_steps + 1][2],
                             temp[index][0], temp[index][1], temp[index][2],
@@ -73,14 +84,13 @@ def generate_sphere(points, cx, cy, cz, r, step):
     while rotation < rot_stop:
         circle = 0
         rot = float(rotation) / MAX_STEPS
-        while circle < circ_stop:
+        while circle <= circ_stop:
             circ = float(circle) / MAX_STEPS
             x = r * math.cos(math.pi * circ) + cx
             y = r * math.sin(math.pi * circ) * math.cos(2 * math.pi * rot) + cy
             z = r * math.sin(math.pi * circ) * math.sin(2 * math.pi * rot) + cz
             add_point(points, x, y, z)
             circle += step
-        add_point(points, cx - r, cy, cz)
         rotation += step
 
 
