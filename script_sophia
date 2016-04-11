@@ -1,0 +1,7 @@
+clear
+sphere
+100 100 100
+apply
+display
+save
+picSophia.png
