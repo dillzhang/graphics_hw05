@@ -11,8 +11,7 @@ def back_face_culling(points, view, index):
     v1 = make_vector(points[index], points[index + 2])
     cross = cross_product(v0, v1)
     dot = dot_product(cross, view)
-    cosTheta = dot / float(mag_view * magnitude(cross))
-    return cosTheta < 0
+    return dot < 0
 
 
 def add_polygon(points, x0, y0, z0, x1, y1, z1, x2, y2, z2):

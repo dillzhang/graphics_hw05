@@ -1,4 +1,4 @@
-file = script_3d
+file = script_sophia
 make:
 	python main.py $(file)
 dillon:
