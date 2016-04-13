@@ -5,11 +5,11 @@ ident
 xrotate
 90
 apply
+ident
 sphere
 -100 120 50
 sphere
 100 120 50
-ident
 translate
 250 250 0
 apply
